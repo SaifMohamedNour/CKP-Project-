@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ar" translate="yes">
+
+<head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>المنتجات</title>
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap">
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+       <link rel="stylesheet" href="css/bootstrap.min.css">
+       <link rel="stylesheet" href="css/bootstrap.min.css.map">
+       <script src="https://d3js.org/d3.v7.min.js"></script>
+       <link rel="stylesheet" type="text/css"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+       <link rel="profile" href="//gmpg.org/xfn/11">
+       <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap"
+              rel="stylesheet">
+
+       <style>
+              body {
+                     /* background: radial-gradient(#fff, #fff, #fff, #12c2e9); */
+                     overflow-x: hidden;
+                     direction: rtl;
+
+              }
+
+              * {
+                     margin: 0;
+                     padding: 0;
+              }
+
+              /* التنسيقات العامة */
+              header a {
+                     text-decoration: none;
+                     color: #000;
+                     font-size: 16px;
+                     position: relative;
+                     /* لتحكم أفضل في ::after */
+                     display: inline-block;
+                     /* يسمح بإضافة الخط */
+                     transition: color 0.3s ease;
+              }
+
+              header {
+                     position: fixed;
+                     width: 100%;
+                     z-index: 10000;
+                     display: flex;
+                     justify-content: center;
+                     align-items: center;
+                     padding: 10px;
+                     backdrop-filter: blur(10px);
+                     direction: ltr;
+              }
+
+              header .logo {
+                     font-size: 30px;
+                     text-transform: uppercase;
+              }
+
+              header ul {
+                     display: flex;
+                     justify-content: center;
+                     align-items: center;
+                     list-style: none;
+              }
+
+              header ul li {
+
+                     margin-right: 90px;
+                     margin-left: 90px;              }
+
+              header ul li a {
+                     padding: 6px 15px;
+                     transition: color 0.3s ease;
+              }
+
+
+
+              /* الخط عند التمرير */
+              header ul li a::after {
+                     content: "";
+                     position: absolute;
+                     top: 0;
+                     /* يظهر في الأسفل */
+                     right: 0;
+                     /* يبدأ من اليمين */
+                     width: 0;
+                     height: 2px;
+                     background-color: #6c63ff;
+                     /* لون الخط */
+                     transition: width 0.3s ease;
+                     /* حركة الانزلاق */
+              }
+
+              header ul li a:hover::after {
+                     width: 100%;
+                     /* يمتد على عرض العنصر */
+                     /* right: 0; */
+                     /* ينتهي عند اليسار */
+              }
+
+              /* العنصر النشط */
+              header ul li a.active::after {
+                     width: 100%;
+              }
+
+              /* الخط عند التمرير */
+              header ul li a::before {
+                     content: "";
+                     position: absolute;
+                     bottom: 0;
+                     /* يظهر في الأسفل */
+                     left: 0;
+                     /* يبدأ من اليمين */
+                     width: 0;
+                     height: 2px;
+                     background-color: #6c63ff;
+                     /* لون الخط */
+                     transition: width 0.3s ease;
+                     /* حركة الانزلاق */
+              }
+
+              header ul li a:hover::before {
+                     width: 100%;
+                     /* يمتد على عرض العنصر */
+                     left: 0;
+                     /* ينتهي عند اليسار */
+              }
+
+              /* العنصر النشط */
+              header ul li a.active::before {
+                     width: 100%;
+              }
+
+              .header {
+                     position: fixed;
+                     top: 70px;
+                     z-index: 100000;
+                     width: 100%;
+                     background-color: #f1f1f1;
+              }
+              .main {
+                     /* background-color: #1d2023; */
+                     height: 100vh;
+                     display: flex;
+                     flex-direction: column;
+                     align-items: center;
+                     justify-content: space-around;
+
+              }
+
+              .main h2 {
+                     color: #6c63ff;
+                     font-size: 40px;
+              }
+
+              .prompt {
+                     display: flex;
+                     justify-content: center;
+                     align-items: center;
+                     height: 100px;
+                     width: 700px;
+                     padding: 15px;
+                     margin-top: 30px;
+                     border-radius: 10px;
+                     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
+                     background-color: #e5e7eb;
+
+              }
+
+              input,
+              button {
+                     padding: 10px;
+                     border: none;
+                     font-size: 20px;
+                     color: #000000;
+                     border-radius: 30px;
+                     width: 500px;
+                     height: 50px;
+                     border: none;
+                     border-radius: 100px;
+                     padding: 0px 20px;
+
+                     height: 50px;
+                     border: none;
+                     border-radius: 100px;
+                     margin: 0px 10px;
+                     width: 160px;
+                     font-size: 15px;
+                     cursor: pointer;
+                     transition: all 0.3s;
+              }
+
+              input {
+                     /* background-color: #1d2023; */
+                     width: 75%;
+                     outline: none;
+                     /* color: #000000; */
+              }
+
+              button {
+                     /* background-color: #36383d; */
+                     width: 20%;
+                     cursor: pointer;
+                     background: linear-gradient(100deg, #EAF6FB, #B0DFFA);
+
+              }
+
+              button:hover {
+                     /* background-color: #45464a; */
+              }
+
+              .images {
+                     display: grid;
+                     grid-template-columns: repeat(3, 1fr);
+                     gap: 10px;
+                     /* box-shadow: 0px 0px 60px #1f4c65;  */
+              }
+
+              .images div {
+                     height: 200px;
+                     width: 200px;
+                     /* background-color: #1d2023; */
+                     border-radius: 10px;
+                     box-shadow: 0px 0px 60px #1f4c65;
+                     background: #fff;
+
+                     /* border: 3px solid #36383d; */
+              }
+
+              .images div img {
+                     width: 100%;
+                     width: 200px;
+              }
+
+              .product-h2 h2 {
+                     font-size: 30px;
+                     font-weight: bold;
+                     color: #6c63ff;
+                     text-align: center;
+                     margin-bottom: 0px;
+                     margin-top: 200px;
+              }
+
+
+              /* From Uiverse.io by 3HugaDa3 */
+              .uncommon-box {
+                     width: 320px;
+                     background-color: #ffffff;
+                     border-radius: 16px;
+                     overflow: hidden;
+                     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                     transition: all 0.3s ease;
+                     margin-left: 100px;
+                     margin-bottom: 100px;
+                     margin-top: 40px;
+              }
+
+              .uncommon-box:hover {
+                     transform: translateY(-10px) rotateY(5deg);
+                     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+              }
+
+              .funky-background {
+                     height: 300px;
+                     /* width: 350px; */
+                     position: relative;
+                     overflow: hidden;
+              }
+              .funky-background img{
+                     width: 100%;
+                     height: 100%;
+                     object-fit: cover;
+
+              }
+              .funky-background::before {
+                     content: "";
+                     position: absolute;
+                     top: 0;
+                     left: -50%;
+                     width: 200%;
+                     height: 100%;
+                     background: linear-gradient(to bottom,
+                                   transparent,
+                                   rgba(255, 255, 255, 0.1) 50%,
+                                   transparent);
+                     transform: rotate(45deg);
+                     animation: flicker 3s infinite;
+              }
+
+              @keyframes flicker {
+                     0% {
+                            transform: translateX(-50%) rotate(45deg);
+                     }
+
+                     100% {
+                            transform: translateX(100%) rotate(45deg);
+                     }
+              }
+
+              .quirk-content {
+                     padding: 24px;
+              }
+
+              .whimsical-heading {
+                     font-size: 24px;
+                     font-weight: 600;
+                     color: #1f2937;
+                     margin: 0 0 16px;
+                     position: relative;
+                     padding-bottom: 10px;
+              }
+
+              .whimsical-heading::after {
+                     content: "";
+                     position: absolute;
+                     left: 0;
+                     bottom: 0;
+                     width: 50px;
+                     height: 3px;
+                     background-color: #4f46e5;
+                     transition: width 0.3s ease;
+              }
+
+              .uncommon-box:hover .whimsical-heading::after {
+                     width: 100px;
+              }
+
+              .eccentric-text {
+                     font-size: 14px;
+                     color: #4b5563;
+                     line-height: 1.6;
+                     margin-bottom: 20px;
+              }
+
+              .odd-labels {
+                     display: flex;
+                     flex-wrap: wrap;
+                     gap: 8px;
+                     margin-bottom: 20px;
+              }
+
+              .strange-label {
+                     font-size: 12px;
+                     color: #4f46e5;
+                     background-color: #eef2ff;
+                     padding: 4px 10px;
+                     border-radius: 20px;
+                     transition: all 0.3s ease;
+              }
+
+              .strange-label:hover {
+                     background-color: #4f46e5;
+                     color: #ffffff;
+                     transform: translateY(-2px);
+              }
+
+              .curious-bottom {
+                     display: flex;
+                     justify-content: space-between;
+                     align-items: center;
+                     padding-top: 16px;
+                     border-top: 1px solid #e5e7eb;
+              }
+
+              .mystical-link {
+                     display: inline-block;
+                     padding: 10px 20px;
+                     /* background: linear-gradient(135deg, #4f46e5, #818cf8); */
+                     color: #ffffff;
+                     text-decoration: none;
+                     border-radius: 25px;
+                     font-weight: 600;
+                     transition: all 0.3s ease;
+                     position: relative;
+                     overflow: hidden;
+              }
+
+              .mystical-link::before {
+                     content: "";
+                     position: absolute;
+                     top: 0;
+                     left: -100%;
+                     width: 100%;
+                     height: 100%;
+                     background: linear-gradient(135deg,
+                                   transparent,
+                                   rgba(255, 255, 255, 0.3),
+                                   transparent);
+                     transition: all 0.4s ease;
+              }
+
+              .mystical-link:hover::before {
+                     left: 100%;
+              }
+
+              .mystical-link:hover {
+                     transform: translateY(-3px);
+                     box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+              }
+
+              .con-pro {
+                     display: flex;
+                     /* gap: 10px; */
+                     align-items: center;
+                     justify-content: center;
+                     padding: 20px;
+                     border-radius: 10px;
+                     margin-right: 80px;
+              }
+
+              #main-container {
+                     display: flex;
+                     justify-content: center;
+                     align-items: center;
+                     /* background-color: rgb(15 27 83); */
+                     height: 100vh;
+                     flex-direction: column;
+              }
+
+              body {
+                     margin: 0px;
+                     /* color: white; */
+              }
+
+              body,
+              button,
+              input {
+                     font-family: 'Cairo', sans-serif;
+              }
+
+              #main-title {
+                     font-size: 40px;
+                     margin: 0px;
+                     color: #4f46e5;
+              }
+
+              #main-content {
+                     display: flex;
+                     justify-content: center;
+                     align-items: center;
+                     height: 100px;
+                     width: 700px;
+                     padding: 15px;
+                     margin-top: 30px;
+                     border-radius: 10px;
+                     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
+                     background-color: #e5e7eb;
+              }
+
+              #word-input {
+                     width: 500px;
+                     height: 50px;
+                     border: none;
+                     border-radius: 100px;
+                     padding: 0px 20px;
+              }
+
+              #submit-btn {
+                     height: 50px;
+                     border: none;
+                     border-radius: 100px;
+                     margin: 0px 10px;
+                     width: 160px;
+                     /* background-color: rgb(35, 104, 252); */
+                     /* color: white; */
+                     font-size: 15px;
+                     cursor: pointer;
+                     transition: all 0.3s;
+              }
+
+              #reply-content {
+                     font-size: 25px;
+                     color: black;
+                     display: flex;
+                     justify-content: center;
+                     align-items: center;
+                     background-color: #fff;
+                     height: 400px;
+                     width: 700px;
+                     padding: 15px;
+                     margin-top: 30px;
+                     border-radius: 10px;
+                     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
+              }
+
+              body {
+                     background-color: #B0DFFA;
+              }
+
+              
+              /* The line element */
+              .scroll-line {
+                     position: fixed;
+                     top: 9%;
+                     left: 0;
+                     width: 0;
+                     /* Initial width of the line */
+                     height: 5px;
+                     background-color: #6c63ff;
+                     transition: width 0.2s ease-out;
+                     z-index: 10;
+              }
+
+       </style>
+</head>
+
+<body>
+       <header>
+              <!-- <h2><a href="#" class="logo">saif</a></h2> -->
+              <ul>
+                     <li><a href="../Main-Index.html" class="#" target="_blank">الرئيسيه</a></li>
+                     <li><a href="product.html" class="active" target="_blank">المنتجات</a></li>
+                     <li><a href="../about/about.html" class="about" target="_blank">عنا</a></li>
+                     <!-- <li><a href="#" class="contact" target="_blank">contact</a></li> -->
+              </ul>
+       </header><div class="scroll-line"></div>
+
+       <div class="back-to-top" onclick="scrollToTop()">
+              <span>&#8593;</span>
+       </div>
+
+       <main>
+
+              <div class="main">
+                     <h2 class="product-h2">مولد صور بالذكاء الاصطناعي</h2>
+
+                     <!-- <h2>AI IMAGES</h2> -->
+                     <div class="images">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                     </div>
+                     <div class="prompt">
+                            <input type="text" id="inp" style="color: #000;"
+                                   placeholder="اسأل ما تشاء للذكاء الاصطناعي..">
+                            <button onclick="getImage()">ارسال</button>
+                     </div>
+              </div>
+
+              <div id="main-container">
+
+                     <div>
+                            <h1 id="main-title">مساعد افتراضي بالذكاءالاصطناعي</h1>
+                     </div>
+
+                     <div id="main-content">
+                            <input id="word-input" type="text" placeholder="اسأل ما تشاء للذكاء الاصطناعي..">
+                            <button id="submit-btn">إرسال</button>
+                     </div>
+
+                     <div id="reply-content">
+                            أهلا بك.. اطرح أي سؤال يدور في بالك
+                     </div>
+
+
+              </div>
+       </main>
+       <div class="spikes">
+
+       </div>
+       <div class="con-pro">
+              <div class="uncommon-box">
+                     <div aria-label="Abstract gradient background" role="img" class="funky-background">
+                            <a href="">
+                            <img src="../assest\img\backgrounds\image.png" alt="">
+                     </a>
+                     </div>
+                     <div class="quirk-content">
+                            <p class="whimsical-heading">دورة الذكاء الاصطناعي</p>
+                            <p class="eccentric-text">تعلم أساسيات الذكاء الاصطناعي بخطوات سهلة ومبسطة
+                            </p>
+                            <div class="curious-bottom"> <a class="mystical-link" href="#">
+                                          <h3 style="color: #4f46e5;">ابدا</h3>
+                                   </a></div>
+                     </div>
+              </div>
+              <div class="uncommon-box">
+                     <div aria-label="Abstract gradient background" role="img" class="funky-background">
+                            <a href="">
+                            <img src="../assest/img/courses/machine-learning-5976913_960_720.png" alt="">
+                     </a>
+                     </div>
+                     <div class="quirk-content">
+                            <p class="whimsical-heading">دورة التعلم الآلي</p>
+                            <p class="eccentric-text">تعرف على أساسيات التعلم الآلي وكيفية تطبيقه في حل المشكلات</p>
+                            <div class="curious-bottom"> <a class="mystical-link" href="#">
+                                          <h3 style="color: #4f46e5;">ابدا</h3>
+                                   </a></div>
+                     </div>
+              </div>
+              <div class="uncommon-box">
+                     <div aria-label="Abstract gradient background" role="img" class="funky-background">
+                            <a href="">
+                            <img src="../assest/img/coding-programming-application-development-vector-31636821.avif">
+                     </a>
+                     </div>
+                     <div class="quirk-content">
+                            <p class="whimsical-heading">دورة الواجهات الأمامية</p>
+                            <p class="eccentric-text">اكتشف كيف يمكن للذكاء الاصطناعي تحسين تجربة المستخدم في الواجهات الأمامية
+                            </p>
+                            <div class="curious-bottom"> <a class="mystical-link" href="#">
+                                          <h3 style="color: #4f46e5;">ابدا</h3>
+                                   </a></div>
+                     </div>
+              </div>
+       </div>
+       <script>
+              const api = 'مفتاح-الـ-API-الخاص-بك'; // تأكد من عدم تعريضه على الواجهة الأمامية
+              const inp = document.getElementById('inp');
+              const images = document.querySelector('.images');
+
+              const getImage = async () => {
+                     try {
+                            // التحقق من أن المدخلات ليست فارغة
+                            if (!inp.value.trim()) {
+                                   alert("من فضلك أدخل نصًا.");
+                                   return;
+                            }
+
+                            // إعداد الطلب
+                            const method = {
+                                   method: "POST",
+                                   headers: {
+                                          "Content-Type": "application/json",
+                                          "Authorization": `Bearer ${api}`,
+                                   },
+                                   body: JSON.stringify({
+                                          "prompt": inp.value,
+                                          "n": 3,
+                                          "size": "256x256",
+                                   }),
+                            };
+
+                            // إرسال الطلب
+                            const res = await fetch('https://api.openai.com/v1/images/generations', method);
+
+                            // التحقق من صحة الاستجابة
+                            if (!res.ok) {
+                                   throw new Error('فشل في تحميل الصور');
+                            }
+
+                            // تحويل الاستجابة إلى JSON
+                            const data = await res.json();
+
+                            // التحقق من وجود البيانات
+                            if (!data || !data.data) {
+                                   throw new Error('استجابة غير صالحة من الخادم');
+                            }
+
+                            const listImages = data.data;
+
+                            // مسح الصور السابقة قبل إضافة الجديدة
+                            images.innerHTML = '';
+
+                            // إضافة الصور الجديدة
+                            listImages.forEach(photo => {
+                                   const container = document.createElement("div");
+                                   images.append(container);
+                                   const img = document.createElement("img");
+                                   container.append(img);
+                                   img.src = photo.url;
+                            });
+                     } catch (error) {
+                            console.error("خطأ:", error);
+                            alert("حدث خطأ. من فضلك حاول مرة أخرى.");
+                     }
+              };
+
+       </script>
+       <script>
+              document.getElementById("submit-btn").addEventListener("click", function () {
+                     sendToChatGPT();
+              });
+
+              function sendToChatGPT() {
+                     let value = document.getElementById("word-input").value;
+
+                     let body = {
+                            model: "gpt-4",
+                            messages: [{ role: "user", content: value }],
+                            temperature: 1, // تم تصحيح الخطأ
+                     };
+
+                     let headers = {
+                            Authorization: "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", // ضع المفتاح هنا مؤقتاً (للتجريب فقط)
+                     };
+
+                     axios
+                            .post("https://api.openai.com/v1/chat/completions", body, { headers })
+                            .then((response) => {
+                                   let reply = response.data.choices[0].message.content;
+                                   document.getElementById("reply-content").textContent = reply;
+                            })
+                            .catch((error) => {
+                                   console.error("Error occurred:", error);
+                                   document.getElementById("reply-content").textContent =
+                                          "حدث خطأ أثناء الاتصال بالخادم. تحقق من المدخلات أو المفتاح.";
+                            });
+              }
+
+       </script>
+       <script>
+              // Select the line element
+              const scrollLine = document.querySelector('.scroll-line');
+
+              // Add an event listener to track scroll
+              window.addEventListener('scroll', () => {
+                     // Calculate the scroll percentage (how much is scrolled compared to the total scrollable height)
+                     const scrollY = window.scrollY;
+                     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                     const scrollPercent = (scrollY / docHeight) * 100;
+
+                     // Set the width of the line based on scroll percentage
+                     scrollLine.style.width = scrollPercent + '%';
+              });
+       </script>
+       
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+       <script src="js/bootstrap.bundle.js"></script>
+       <script src="js/bootstrap.min.js.map"></script>
+       <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+       <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+       <script src="js/saif.js"></script>
+
+
+</body>
+
+</html>
